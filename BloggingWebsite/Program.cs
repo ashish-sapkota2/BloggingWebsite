@@ -15,7 +15,7 @@ builder.Services.AddDbContext<DataContext>(
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("Database"));
     });
-
+builder.Services.AddTransient<DapperDbContext>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
