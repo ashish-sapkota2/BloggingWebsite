@@ -7,12 +7,12 @@ namespace BloggingWebsite.Models
         public int Id { get; set; }
         public string? UserName { get; set; }
         [EmailAddress]
-        public string? Email { get; set; }
-        public string? PasswrodHash { get; set; }
-        public string? PasswordSalt { get; set; }
+        public string Email { get; set; }
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
         public string? ProfilePictureUrl { get; set; }
         public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
         public int FollowersCount { get; set; }
         public ICollection<Story>? Stories { get; set; }
         public ICollection<Comment>? Comments { get; set; }

@@ -1,5 +1,8 @@
 using BloggingWebsite.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +19,18 @@ builder.Services.AddDbContext<DataContext>(
         options.UseSqlServer(builder.Configuration.GetConnectionString("Database"));
     });
 builder.Services.AddTransient<DapperDbContext>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
+    options =>
+    {
+        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"])),
+            ValidateIssuer =false,
+            ValidateAudience=false,
+        };
+        });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
