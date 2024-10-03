@@ -53,7 +53,7 @@ namespace BloggingWebsite.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<ActionResult<Users>>Login(LoginDto loginDto)
+        public async Task<ActionResult<UserDto>>Login(LoginDto loginDto)
         {
             var sql = "select * from users where UserName=@username";
             using(var connnection= dapper.CreateConnection())
@@ -73,8 +73,8 @@ namespace BloggingWebsite.Controllers
                 return new UserDto
                 {
                     Username = loginDto.Username,
-                    Token= tokenService.CreateToken(user)
-                }
+                    Token = await tokenService.CreateToken(user)
+                };
             }
 
         }

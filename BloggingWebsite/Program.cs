@@ -1,4 +1,6 @@
 using BloggingWebsite.Data;
+using BloggingWebsite.Interface;
+using BloggingWebsite.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -30,7 +32,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
             ValidateIssuer =false,
             ValidateAudience=false,
         };
-        });
+    });
+
+builder.Services.AddScoped<ITokenService, TokenService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
