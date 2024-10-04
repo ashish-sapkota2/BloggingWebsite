@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
   <div class="container-fluid">
-    <a class="navbar-brand ms-3" href="#">Blog</a>
+    <a class="navbar-brand ms-3" href="#">Scattered Tales</a>
     <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -21,10 +21,40 @@
         </li>
       </ul>
     </div>
+    <div class="btn-group" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
+      <a class="d-flex align-items-center text-light dropdown-toggle" dropdownToggle id="userDropdown" aria-expanded="false">
+        <img [src]="user.profileImageUrl || '../../assets/background.jpg'" alt="User Image" class="rounded-circle me-2" width="30" height="30">
+        <span>Welcome {{ user.username | titlecase }}</span>
+      </a>
+      <ul *dropdownMenu class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+        <li>
+          <a class="dropdown-item" routerLink="">Edit Profile</a>
+        </li>
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+        <li>
+          <a class="dropdown-item text-danger" (click)="logout()">Logout</a>
+        </li>
+      </ul>
+    </div>
     
-    <form class="d-flex ms-auto me-3" role="search">
-      <input class="form-control me-2" type="text" placeholder="Username">
-      <input class="form-control me-2" type="password" placeholder="Password">
+    
+    <form *ngIf="(accountService.currentUser$ | async)===null" class="d-flex ms-auto me-3" role="search" (ngSubmit)="login()">
+      <input 
+      class="form-control me-2"
+      type="text" 
+      placeholder="Username"
+      name="username"
+      [(ngModel)]="model.username"
+      >
+      <input 
+      class="form-control me-2" 
+      type="password" 
+      placeholder="Password"
+      name="password"
+      [(ngModel)]="model.password"
+      >
       <button class="btn btn-outline-success" type="submit">Login</button>
     </form>
   </div>

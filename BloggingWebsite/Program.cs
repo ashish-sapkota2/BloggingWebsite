@@ -35,6 +35,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     });
 
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddCors();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -46,6 +47,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod()
+.AllowCredentials()
+.WithOrigins("http://localhost:4200"));
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
