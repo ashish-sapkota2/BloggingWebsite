@@ -11,7 +11,7 @@ import { FormsModule, NgControl, ReactiveFormsModule,ControlValueAccessor } from
 })
 export class TestInputComponent implements ControlValueAccessor {
 @Input() label:string;
-@Input() type='text';
+@Input() type:string;
 
 constructor(@Self() public ngControl:NgControl){
   if(this.ngControl){

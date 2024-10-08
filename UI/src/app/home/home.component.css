@@ -93,6 +93,15 @@ body::before {
   background-color: #218838;
 }
 
+/* Disabled state styles */
+.register-btn:disabled {
+  background-color: #ccc; /* A light grey to indicate disabled state */
+  cursor: not-allowed;    /* Show 'not-allowed' cursor */
+  color: #666;            /* Change text color to grey */
+  border: none;
+}
+
+
 /* Footer */
 .footer {
   text-align: center;

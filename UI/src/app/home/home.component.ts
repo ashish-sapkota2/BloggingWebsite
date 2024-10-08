@@ -24,7 +24,7 @@ export class HomeComponent {
   initializeForm(){
     this.registerForm=this.fb.group({
       username:['',Validators.required],
-      email:['',Validators.required],
+      email:['',[Validators.required,Validators.email]],
       password:['',[Validators.required,Validators.minLength(6),Validators.maxLength(15)]],
       confirmPassword:['',[Validators.required,this.matchValues('password')]]
 
@@ -37,7 +37,14 @@ export class HomeComponent {
     }
   }
   register(){
-    console.log('clicked')
+    var result = this.accountService.register(this.registerForm.value).subscribe(response=>{
+      this.router.navigateByUrl('/members');
+      console.log(response)
+    }
+    )
+    if(!result){
+      this.validationErrors=["Something went wrong"]
+    }
   }
 }
 
